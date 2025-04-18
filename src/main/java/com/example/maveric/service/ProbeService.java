@@ -1,7 +1,5 @@
 package com.example.maveric.service;
 
-import java.util.List;
-
 import com.example.maveric.model.Position;
 
 public class ProbeService {
@@ -14,6 +12,9 @@ public class ProbeService {
         switch (command) {
 	        case "FORWARD" -> {
 	            x++;
+	        }
+	        case "BACKWARD" -> {
+	            x--;
 	        }
         }
         

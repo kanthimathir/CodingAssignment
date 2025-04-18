@@ -7,8 +7,14 @@ import org.junit.jupiter.api.Test;
 class PositionTest {
 
 	@Test
-	void test() {
+	/*void test() {
 		fail("Not yet implemented");
+	}*/
+	void getcoordinates() {
+		int i = 1;
+		int j = 2;
+		Position p1 = new Position(1,2);
+		assertEquals(i, p1.getX());
+		assertEquals(j, p1.getY());
 	}
-
 }

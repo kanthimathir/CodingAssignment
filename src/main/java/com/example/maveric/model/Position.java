@@ -4,11 +4,13 @@ public class Position {
 
 	private int x;
     private int y;
+    private String direction;
     
-	public Position(int i, int j) {
+	public Position(int i, int j, String strDirection) {
 		// TODO Auto-generated constructor stub
 		this.x = i;
 	    this.y = j;
+	    direction = strDirection;
 	}
 
 	public int getX() {
@@ -27,5 +29,13 @@ public class Position {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
 	}
 }

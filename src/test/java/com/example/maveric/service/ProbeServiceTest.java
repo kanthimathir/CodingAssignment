@@ -12,23 +12,25 @@ class ProbeServiceTest {
 	
 	@Test
     void shouldMoveForward() {
-        Position start = new Position(2, 2);
+        Position start = new Position(2, 2, "EAST");
         String command = "FORWARD";
         
         Position end = probeService.executeCommands(start, command);
 
         assertEquals(3, end.getX());
         assertEquals(2, end.getY());
+        assertEquals("EAST", end.getDirection());
     }
 	
 	@Test
     void shouldMoveBackward() {
-        Position start = new Position(2, 2);
+        Position start = new Position(2, 2, "EAST");
         String command = "BACKWARD";
         
         Position end = probeService.executeCommands(start, command);
 
         assertEquals(1, end.getX());
         assertEquals(2, end.getY());
+        assertEquals("EAST", end.getDirection());
     }
 }

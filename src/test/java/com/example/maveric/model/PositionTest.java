@@ -10,8 +10,10 @@ class PositionTest {
 	void getcoordinates() {
 		int i = 1;
 		int j = 2;
-		Position p1 = new Position(1,2);
+		private String direction;
+		Position p1 = new Position(1,2, "EAST");
 		assertEquals(i, p1.getX());
 		assertEquals(j, p1.getY());
+		assertEquals("EAST", p1.getDirection());
 	}
 }

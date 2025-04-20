@@ -21,7 +21,7 @@ public class ProbeService {
                 case "SOUTH" -> y--;
                 case "EAST" -> x++;
                 case "WEST" -> x--;
-	        	}
+	        	};
 	        }
 	        case "BACKWARD" -> {
 	        	switch (direction) {
@@ -29,11 +29,27 @@ public class ProbeService {
                 case "SOUTH" -> y++;
                 case "EAST" -> x--;
                 case "WEST" -> x++;
+	        	};
             }
+	        case "LEFT" -> {
+	        	direction = switch (direction) {
+                    case "NORTH" -> "WEST";
+                    case "WEST" -> "SOUTH";
+                    case "SOUTH" -> "EAST";
+                    case "EAST" -> "NORTH";
+                    default -> throw new IllegalArgumentException("Unexpected value: " + direction);
+                };
+            }
+            case "RIGHT" -> {
+                direction = switch (direction) {
+                    case "NORTH" -> "EAST";
+                    case "EAST" -> "SOUTH";
+                    case "SOUTH" -> "WEST";
+                    case "WEST" -> "NORTH";
+                    default -> throw new IllegalArgumentException("Unexpected value: " + direction);
+                };
 	        }
         }
-        
 		return new Position(x, y, direction);
 	}
-
 }

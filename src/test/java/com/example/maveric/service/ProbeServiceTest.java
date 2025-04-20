@@ -33,4 +33,14 @@ class ProbeServiceTest {
         assertEquals(2, end.getY());
         assertEquals("EAST", end.getDirection());
     }
+	
+	@Test
+	void shouldTurnRight() {
+	    Position start = new Position(0, 0, "EAST");
+	    String command = "RIGHT";
+
+	    Position end = probeService.executeCommands(start, command);
+
+	    assertEquals("SOUTH", end.getDirection());
+	}
 }

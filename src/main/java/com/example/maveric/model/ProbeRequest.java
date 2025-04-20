@@ -1,12 +1,15 @@
-package com.example.maveric.controller;
-
-import com.example.maveric.model.Command;
-import com.example.maveric.model.Position;
+package com.example.maveric.model;
 
 public class ProbeRequest {
 	
 	private Position start;
     private Command command;
+    
+    public ProbeRequest(Position start, Command command) {
+		// TODO Auto-generated constructor stub
+		this.start = start;
+	    this.command = command;
+	}
     
 	public Position getStart() {
 		return start;
@@ -20,6 +23,4 @@ public class ProbeRequest {
 	public void setCommand(Command command) {
 		this.command = command;
 	}
-
-
 }

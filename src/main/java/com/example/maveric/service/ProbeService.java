@@ -1,6 +1,10 @@
 package com.example.maveric.service;
 
+import org.springframework.stereotype.Service;
+
 import com.example.maveric.model.Position;
+
+@Service
 
 public class ProbeService {
 

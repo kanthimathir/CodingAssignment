@@ -1,25 +1,26 @@
 package com.example.maveric.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.maveric.model.Position;
 import com.example.maveric.service.ProbeService;
 
+@RestController
+@RequestMapping("/api/probe")
+
 public class ProbeController {
 	@Autowired
-	ProbeService ps = new ProbeService();
-
-	public Position moveProbe(Position start, String command) {
+	private ProbeService ps; 
+    
+	@PostMapping("/move")
+	public Position moveProbe(@RequestBody ProbeRequest request) {
 		// TODO Auto-generated method stub
-		//Position start = new Position(1, 2, "EAST");
-		//String command = "FORWARD";
-		
-		Position end = ps.executeCommands(start, command);
-		int x = end.getX();
-		int y = end.getY();
-		String direction = end.getDirection();
-		Position p1 = new Position(x,y,direction);
-		return p1;
+
+		return ps.executeCommands(request.getStart(), request.getCommand());
 	}
 
 }

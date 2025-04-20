@@ -1,11 +1,12 @@
 package com.example.maveric.controller;
 
+import com.example.maveric.model.Command;
 import com.example.maveric.model.Position;
 
 public class ProbeRequest {
 	
 	private Position start;
-    private String command;
+    private Command command;
     
 	public Position getStart() {
 		return start;
@@ -13,10 +14,10 @@ public class ProbeRequest {
 	public void setStart(Position start) {
 		this.start = start;
 	}
-	public String getCommand() {
+	public Command getCommand() {
 		return command;
 	}
-	public void setCommand(String command) {
+	public void setCommand(Command command) {
 		this.command = command;
 	}
 

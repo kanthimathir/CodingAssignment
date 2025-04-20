@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.maveric.model.Command;
 import com.example.maveric.model.Position;
 
 class ProbeServiceTest {
@@ -13,7 +14,7 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForward() {
         Position start = new Position(2, 2, "EAST");
-        String command = "FORWARD";
+        Command command = Command.MOVE_FORWARD;
         
         Position end = probeService.executeCommands(start, command);
 
@@ -25,7 +26,7 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackward() {
         Position start = new Position(2, 2, "EAST");
-        String command = "BACKWARD";
+        Command command = Command.MOVE_BACKWARD;
         
         Position end = probeService.executeCommands(start, command);
 
@@ -37,10 +38,20 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRight() {
 	    Position start = new Position(0, 0, "EAST");
-	    String command = "RIGHT";
+	    Command command = Command.TURN_RIGHT;
 
 	    Position end = probeService.executeCommands(start, command);
 
 	    assertEquals("SOUTH", end.getDirection());
+	}
+	
+	@Test
+	void shouldTurnLeft() {
+	    Position start = new Position(0, 0, "EAST");
+	    Command command = Command.TURN_LEFT;
+
+	    Position end = probeService.executeCommands(start, command);
+
+	    assertEquals("NORTH", end.getDirection());
 	}
 }

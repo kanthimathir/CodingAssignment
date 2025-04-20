@@ -4,14 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import com.example.maveric.model.Command;
 import com.example.maveric.model.Position;
 import com.example.maveric.service.ProbeService;
 
 class ProbeControllerTest {	
 	
 	@ParameterizedTest(name = "{index} => x={0}, y={1}, direction={2}, command={3}")
-	@CsvSource(value = {"1, 2, 'EAST', 'FORWARD'"}, ignoreLeadingAndTrailingWhitespace = true)
-	void moveProbe(int x, int y, String direction, String command) 
+	@CsvSource(value = {"1, 2, 'EAST', 'MOVE_FORWARD'"}, ignoreLeadingAndTrailingWhitespace = true)
+	void moveProbe(int x, int y, String direction, Command command) 
 	{
 		Position start = new Position(x, y, direction);
 		

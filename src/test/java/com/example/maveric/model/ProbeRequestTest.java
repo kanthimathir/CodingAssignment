@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class ProbeRequestTest {
 
 	@Test
-	void test() {
+	void getProbeRequestTest() {
 		int i = 1;
 		int j = 2;
 		String direction = "EAST";

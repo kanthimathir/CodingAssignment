@@ -19,15 +19,15 @@ class GridTest {
 	}
 	
 	@ParameterizedTest(name = "{index} => x={0}, y={1}")
-	@CsvSource(value = {"1, 2"}, ignoreLeadingAndTrailingWhitespace = true)
-	void checkBoundsPositive(int x, int y) {
+	@CsvSource(value = {"1, 2", "10, 10", "0, 0"}, ignoreLeadingAndTrailingWhitespace = true)
+	void checkBoundsPositiveScenario(int x, int y) {
 		boolean withinBounds = grid.isWithinBounds(x, y);
 		assertTrue(withinBounds);
 	}
 	
 	@ParameterizedTest(name = "{index} => x={0}, y={1}")
-	@CsvSource(value = {"11, 2"}, ignoreLeadingAndTrailingWhitespace = true)
-	void checkBoundsNegative(int x, int y) {
+	@CsvSource(value = {"11, 2", "11, 12", "1, 12"}, ignoreLeadingAndTrailingWhitespace = true)
+	void checkBoundsNegativeScenario(int x, int y) {
 		boolean withinBounds = grid.isWithinBounds(x, y);
 		assertFalse(withinBounds);
 	}

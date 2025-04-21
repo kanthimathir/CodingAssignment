@@ -13,7 +13,7 @@ class ProbeControllerTest {
 	
 	@ParameterizedTest(name = "{index} => x={0}, y={1}, direction={2}, command={3}")
 	@CsvSource(value = {"1, 2, 'EAST', 'MOVE_FORWARD'"}, ignoreLeadingAndTrailingWhitespace = true)
-	void moveProbe(int x, int y, String direction, Command command) 
+	void moveProbePostiveScenario(int x, int y, String direction, Command command) 
 	{
 		Position start = new Position(x, y, direction);
 		
@@ -23,5 +23,19 @@ class ProbeControllerTest {
 		assertEquals(end.getX(), 2);
 		assertEquals(end.getY(), 2);
 		assertEquals(end.getDirection(), "EAST");
-	}	 
+	}
+	
+	@ParameterizedTest(name = "{index} => x={0}, y={1}, direction={2}, command={3}")
+	@CsvSource(value = {"1, 2, 'EAST', 'MOVE_FORWARD'", "1, 2, 'WEST', 'MOVE_FORWARD'", "1, 2, 'SOUTH', 'MOVE_FORWARD'", "1, 2, 'NORTH', 'MOVE_FORWARD'"}, ignoreLeadingAndTrailingWhitespace = true)
+	void moveProbeNegativeScenario(int x, int y, String direction, Command command) 
+	{
+		Position start = new Position(x, y, direction);
+		
+		ProbeService ps = new ProbeService();
+		Position end = ps.executeCommands(start, command);
+		
+		assertNotEquals(end.getX(), 3);
+		assertNotEquals(end.getY(), 4);
+		assertNotEquals(end.getDirection(), "WESTT");
+	}
 }

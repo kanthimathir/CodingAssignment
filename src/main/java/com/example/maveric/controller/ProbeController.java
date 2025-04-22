@@ -29,7 +29,7 @@ public class ProbeController {
 	    }
 
 	    ps.setGrid(grid);
-		return ps.executeCommands(request.getStart(), request.getCommand());
+		return ps.executeCommands(request.getStart(), request.getCommands());
 	}
 
 }

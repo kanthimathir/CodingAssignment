@@ -2,6 +2,8 @@ package com.example.maveric.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import com.example.maveric.model.Command;
@@ -14,9 +16,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromEastPositiveScenario() {
         Position start = new Position(2, 2, "EAST");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(3, end.getX());
         assertEquals(2, end.getY());
@@ -26,9 +28,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromEastPositiveScenario() {
         Position start = new Position(2, 2, "EAST");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(1, end.getX());
         assertEquals(2, end.getY());
@@ -38,9 +40,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromEastPositiveScenario() {
 	    Position start = new Position(0, 0, "EAST");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("SOUTH", end.getDirection());
 	}
@@ -48,9 +50,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromEastPositiveScenario() {
 	    Position start = new Position(0, 0, "EAST");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("NORTH", end.getDirection());
 	}
@@ -58,9 +60,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromEastNegativeScenario() {
         Position start = new Position(2, 2, "EAST");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(2, end.getX());
         assertNotEquals(3, end.getY());
@@ -70,9 +72,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromEastNegativeScenario() {
         Position start = new Position(2, 2, "EAST");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(2, end.getX());
         assertNotEquals(3, end.getY());
@@ -82,9 +84,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromEastNegativeScenario() {
 	    Position start = new Position(0, 0, "EAST");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("NORTH", end.getDirection());
 	}
@@ -92,9 +94,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromEastNegativeScenario() {
 	    Position start = new Position(0, 0, "EAST");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("SOUTH", end.getDirection());
 	}
@@ -102,9 +104,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromWestPositiveScenario() {
         Position start = new Position(2, 2, "WEST");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(1, end.getX());
         assertEquals(2, end.getY());
@@ -114,9 +116,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromWestPositiveScenario() {
         Position start = new Position(2, 2, "WEST");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(3, end.getX());
         assertEquals(2, end.getY());
@@ -126,9 +128,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromWestPositiveScenario() {
 	    Position start = new Position(0, 0, "WEST");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("NORTH", end.getDirection());
 	}
@@ -136,9 +138,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromWestPositiveScenario() {
 	    Position start = new Position(0, 0, "WEST");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("SOUTH", end.getDirection());
 	}
@@ -146,9 +148,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromWestNegativeScenario() {
         Position start = new Position(2, 2, "WEST");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(2, end.getX());
         assertNotEquals(1, end.getY());
@@ -158,9 +160,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromWestNegativeScenario() {
         Position start = new Position(2, 2, "WEST");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(2, end.getX());
         assertNotEquals(3, end.getY());
@@ -170,9 +172,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromWestNegativeScenario() {
 	    Position start = new Position(0, 0, "WEST");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("SOUTH", end.getDirection());
 	}
@@ -180,9 +182,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromWestNegativeScenario() {
 	    Position start = new Position(0, 0, "WEST");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("NORTH", end.getDirection());
 	}
@@ -190,9 +192,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromSounthPositiveScenario() {
         Position start = new Position(2, 2, "SOUTH");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(2, end.getX());
         assertEquals(1, end.getY());
@@ -202,9 +204,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromSounthPositiveScenario() {
         Position start = new Position(2, 2, "SOUTH");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(2, end.getX());
         assertEquals(3, end.getY());
@@ -214,9 +216,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromSounthPositiveScenario() {
 	    Position start = new Position(0, 0, "SOUTH");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("WEST", end.getDirection());
 	}
@@ -224,9 +226,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromSounthPositiveScenario() {
 	    Position start = new Position(0, 0, "SOUTH");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("EAST", end.getDirection());
 	}
@@ -234,9 +236,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromSounthNegativeScenario() {
         Position start = new Position(2, 2, "SOUTH");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(3, end.getX());
         assertNotEquals(2, end.getY());
@@ -246,9 +248,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromSounthNegativeScenario() {
         Position start = new Position(2, 2, "SOUTH");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(3, end.getX());
         assertNotEquals(2, end.getY());
@@ -258,9 +260,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromSounthNegativeScenario() {
 	    Position start = new Position(0, 0, "SOUTH");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("EAST", end.getDirection());
 	}
@@ -268,9 +270,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromSounthNegativeScenario() {
 	    Position start = new Position(0, 0, "SOUTH");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("WEST", end.getDirection());
 	}
@@ -278,9 +280,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromNorthPositiveScenario() {
         Position start = new Position(2, 2, "NORTH");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(2, end.getX());
         assertEquals(3, end.getY());
@@ -290,9 +292,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromNorthPositiveScenario() {
         Position start = new Position(2, 2, "NORTH");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertEquals(2, end.getX());
         assertEquals(1, end.getY());
@@ -302,9 +304,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromNorthPositiveScenario() {
 	    Position start = new Position(0, 0, "NORTH");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("EAST", end.getDirection());
 	}
@@ -312,9 +314,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromNorthPositiveScenario() {
 	    Position start = new Position(0, 0, "NORTH");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertEquals("WEST", end.getDirection());
 	}
@@ -322,9 +324,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveForwardFromNorthNegativeScenario() {
         Position start = new Position(2, 2, "NORTH");
-        Command command = Command.MOVE_FORWARD;
+        List<Command> commands = List.of(Command.MOVE_FORWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(3, end.getX());
         assertNotEquals(2, end.getY());
@@ -334,9 +336,9 @@ class ProbeServiceTest {
 	@Test
     void shouldMoveBackwardFromNorthNegativeScenario() {
         Position start = new Position(2, 2, "NORTH");
-        Command command = Command.MOVE_BACKWARD;
+        List<Command> commands = List.of(Command.MOVE_BACKWARD);
         
-        Position end = probeService.executeCommands(start, command);
+        Position end = probeService.executeCommands(start, commands);
 
         assertNotEquals(3, end.getX());
         assertNotEquals(2, end.getY());
@@ -346,9 +348,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnRightFromNorthNegativeScenario() {
 	    Position start = new Position(0, 0, "NORTH");
-	    Command command = Command.TURN_RIGHT;
+	    List<Command> commands = List.of(Command.TURN_RIGHT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("WEST", end.getDirection());
 	}
@@ -356,9 +358,9 @@ class ProbeServiceTest {
 	@Test
 	void shouldTurnLeftFromNorthNegativeScenario() {
 	    Position start = new Position(0, 0, "NORTH");
-	    Command command = Command.TURN_LEFT;
+	    List<Command> commands = List.of(Command.TURN_LEFT);
 
-	    Position end = probeService.executeCommands(start, command);
+	    Position end = probeService.executeCommands(start, commands);
 
 	    assertNotEquals("EAST", end.getDirection());
 	}

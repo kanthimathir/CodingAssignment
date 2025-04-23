@@ -1,367 +1,678 @@
 package com.example.maveric.service;
-
+  
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.example.maveric.model.Command;
-import com.example.maveric.model.Position;
-
+import com.example.maveric.model.Coordinate;
+import com.example.maveric.model.Grid;
+import com.example.maveric.model.ProbeRequest;
+import com.example.maveric.model.ProbeResult;
+  
 class ProbeServiceTest {
+  
+	 private ProbeService probeService;
+	 private ProbeRequest request;
+	 
+	 @BeforeEach
+	 public void setup() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(2, 2)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+	 }
 
-	private ProbeService probeService = new ProbeService();
+	 @Test
+	 void shouldMoveForwardFromEastPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	@Test
-    void shouldMoveForwardFromEastPositiveScenario() {
-        Position start = new Position(2, 2, "EAST");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(3, 2), response.getFinalPosition());
+	     assertEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromEastPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertEquals(3, end.getX());
-        assertEquals(2, end.getY());
-        assertEquals("EAST", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromEastPositiveScenario() {
-        Position start = new Position(2, 2, "EAST");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromEastPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertEquals(1, end.getX());
-        assertEquals(2, end.getY());
-        assertEquals("EAST", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromEastPositiveScenario() {
-	    Position start = new Position(0, 0, "EAST");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromEastPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveForwardFromEastNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("SOUTH", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromEastPositiveScenario() {
-	    Position start = new Position(0, 0, "EAST");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertNotEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertNotEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromEastNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertNotEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromEastNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("NORTH", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromEastNegativeScenario() {
-        Position start = new Position(2, 2, "EAST");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromEastNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "EAST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertNotEquals(2, end.getX());
-        assertNotEquals(3, end.getY());
-        assertNotEquals("NORTH", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromEastNegativeScenario() {
-        Position start = new Position(2, 2, "EAST");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
 
-        assertNotEquals(2, end.getX());
-        assertNotEquals(3, end.getY());
-        assertNotEquals("NORTH", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromEastNegativeScenario() {
-	    Position start = new Position(0, 0, "EAST");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+	 @Test
+	 void shouldMoveForwardFromWestPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromWestPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertNotEquals("NORTH", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromEastNegativeScenario() {
-	    Position start = new Position(0, 0, "EAST");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertEquals(new Coordinate(3, 2), response.getFinalPosition());
+	     assertEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromWestPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromWestPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertNotEquals("SOUTH", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromWestPositiveScenario() {
-        Position start = new Position(2, 2, "WEST");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveForwardFromWestNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertEquals(1, end.getX());
-        assertEquals(2, end.getY());
-        assertEquals("WEST", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromWestPositiveScenario() {
-        Position start = new Position(2, 2, "WEST");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(2, 1), response.getFinalPosition());
+	     assertNotEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromWestNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertEquals(3, end.getX());
-        assertEquals(2, end.getY());
-        assertEquals("WEST", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromWestPositiveScenario() {
-	    Position start = new Position(0, 0, "WEST");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+		 assertNotEquals(new Coordinate(2, 3), response.getFinalPosition());
+	     assertNotEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromWestNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromWestNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "WEST";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("NORTH", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromWestPositiveScenario() {
-	    Position start = new Position(0, 0, "WEST");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
 
-	    Position end = probeService.executeCommands(start, commands);
+	 @Test
+	 void shouldMoveForwardFromSounthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("SOUTH", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromWestNegativeScenario() {
-        Position start = new Position(2, 2, "WEST");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 1), response.getFinalPosition());
+	     assertEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromSounthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertNotEquals(2, end.getX());
-        assertNotEquals(1, end.getY());
-        assertNotEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromWestNegativeScenario() {
-        Position start = new Position(2, 2, "WEST");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 3), response.getFinalPosition());
+	     assertEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromSounthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertNotEquals(2, end.getX());
-        assertNotEquals(3, end.getY());
-        assertNotEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromWestNegativeScenario() {
-	    Position start = new Position(0, 0, "WEST");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromSounthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveForwardFromSounthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertNotEquals("SOUTH", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromWestNegativeScenario() {
-	    Position start = new Position(0, 0, "WEST");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertNotEquals(new Coordinate(3, 2), response.getFinalPosition());
+	     assertNotEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromSounthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(2, 1), response.getFinalPosition());
+	     assertNotEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromSounthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertNotEquals("NORTH", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromSounthPositiveScenario() {
-        Position start = new Position(2, 2, "SOUTH");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromSounthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "SOUTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertEquals(2, end.getX());
-        assertEquals(1, end.getY());
-        assertEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromSounthPositiveScenario() {
-        Position start = new Position(2, 2, "SOUTH");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("WEST", response.getFinalDirection());
+		 
+	 }
 
-        assertEquals(2, end.getX());
-        assertEquals(3, end.getY());
-        assertEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromSounthPositiveScenario() {
-	    Position start = new Position(0, 0, "SOUTH");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+	 @Test
+	 void shouldMoveForwardFromNorthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 3), response.getFinalPosition());
+	     assertEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromNorthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("WEST", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromSounthPositiveScenario() {
-	    Position start = new Position(0, 0, "SOUTH");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertEquals(new Coordinate(2, 1), response.getFinalPosition());
+	     assertEquals("NORTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromNorthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromNorthPositiveScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertEquals("EAST", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromSounthNegativeScenario() {
-        Position start = new Position(2, 2, "SOUTH");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertEquals(new Coordinate(2, 2), response.getFinalPosition());
+	     assertEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveForwardFromNorthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_FORWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertNotEquals(3, end.getX());
-        assertNotEquals(2, end.getY());
-        assertNotEquals("EAST", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromSounthNegativeScenario() {
-        Position start = new Position(2, 2, "SOUTH");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(3, 2), response.getFinalPosition());
+	     assertNotEquals("EAST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldMoveBackwardFromNorthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.MOVE_BACKWARD   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-        assertNotEquals(3, end.getX());
-        assertNotEquals(2, end.getY());
-        assertNotEquals("EAST", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromSounthNegativeScenario() {
-	    Position start = new Position(0, 0, "SOUTH");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
+		 assertNotEquals(new Coordinate(2, 3), response.getFinalPosition());
+	     assertNotEquals("SOUTH", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnRightFromNorthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_RIGHT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    Position end = probeService.executeCommands(start, commands);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("WEST", response.getFinalDirection());
+		 
+	 }
+	 
+	 @Test
+	 void shouldTurnLeftFromNorthNegativeScenario() {
+		 probeService = new ProbeService();
+		 
+		 Coordinate start = new Coordinate(2, 2);
+		 String direction = "NORTH";
+		 List<Command> commands = Arrays.asList(
+	            Command.TURN_LEFT   // (0, 1)	            
+	     );
+		 Grid grid = new Grid(5, 5);
+		 List<Coordinate> obstacles = List.of(new Coordinate(3, 3)); // irrelevant for this test
+		 request = new ProbeRequest(start, direction, commands, grid, obstacles);
+		 
+		 ProbeResult response = probeService.executeCommands(request);
 
-	    assertNotEquals("EAST", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromSounthNegativeScenario() {
-	    Position start = new Position(0, 0, "SOUTH");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
+		 assertNotEquals(new Coordinate(1, 2), response.getFinalPosition());
+	     assertNotEquals("EAST", response.getFinalDirection());
+		 
+	 }
 
-	    Position end = probeService.executeCommands(start, commands);
-
-	    assertNotEquals("WEST", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromNorthPositiveScenario() {
-        Position start = new Position(2, 2, "NORTH");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
-
-        assertEquals(2, end.getX());
-        assertEquals(3, end.getY());
-        assertEquals("NORTH", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromNorthPositiveScenario() {
-        Position start = new Position(2, 2, "NORTH");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
-
-        assertEquals(2, end.getX());
-        assertEquals(1, end.getY());
-        assertEquals("NORTH", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromNorthPositiveScenario() {
-	    Position start = new Position(0, 0, "NORTH");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
-
-	    Position end = probeService.executeCommands(start, commands);
-
-	    assertEquals("EAST", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromNorthPositiveScenario() {
-	    Position start = new Position(0, 0, "NORTH");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
-
-	    Position end = probeService.executeCommands(start, commands);
-
-	    assertEquals("WEST", end.getDirection());
-	}
-	
-	@Test
-    void shouldMoveForwardFromNorthNegativeScenario() {
-        Position start = new Position(2, 2, "NORTH");
-        List<Command> commands = List.of(Command.MOVE_FORWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
-
-        assertNotEquals(3, end.getX());
-        assertNotEquals(2, end.getY());
-        assertNotEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-    void shouldMoveBackwardFromNorthNegativeScenario() {
-        Position start = new Position(2, 2, "NORTH");
-        List<Command> commands = List.of(Command.MOVE_BACKWARD);
-        
-        Position end = probeService.executeCommands(start, commands);
-
-        assertNotEquals(3, end.getX());
-        assertNotEquals(2, end.getY());
-        assertNotEquals("SOUTH", end.getDirection());
-    }
-	
-	@Test
-	void shouldTurnRightFromNorthNegativeScenario() {
-	    Position start = new Position(0, 0, "NORTH");
-	    List<Command> commands = List.of(Command.TURN_RIGHT);
-
-	    Position end = probeService.executeCommands(start, commands);
-
-	    assertNotEquals("WEST", end.getDirection());
-	}
-	
-	@Test
-	void shouldTurnLeftFromNorthNegativeScenario() {
-	    Position start = new Position(0, 0, "NORTH");
-	    List<Command> commands = List.of(Command.TURN_LEFT);
-
-	    Position end = probeService.executeCommands(start, commands);
-
-	    assertNotEquals("EAST", end.getDirection());
-	}
 }
+ 

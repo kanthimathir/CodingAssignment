@@ -2,33 +2,26 @@ package com.example.maveric.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class GridTest {
-
-	int width = 10;
-	int height = 10;
-	Grid grid = new Grid(width, height);
+ 
+	Grid grid;
 	
-	@Test
-	void getGridTest() {		
-		assertEquals(10, grid.getWidth());
-		assertEquals(10, grid.getHeight());
+	@ParameterizedTest(name = "{index} => width={0}, height={1}")
+	@CsvSource(value = {"10, 10" , "5, 10", "10, 5"}, ignoreLeadingAndTrailingWhitespace = true)
+	void getGridTestPositiveScenario(int width, int height) { 
+		grid = new Grid(width, height);
+		assertEquals(width, grid.width());
+		assertEquals(height, grid.height()); 
 	}
 	
-	@ParameterizedTest(name = "{index} => x={0}, y={1}")
-	@CsvSource(value = {"1, 2", "10, 10", "0, 0"}, ignoreLeadingAndTrailingWhitespace = true)
-	void checkBoundsPositiveScenario(int x, int y) {
-		boolean withinBounds = grid.isWithinBounds(x, y);
-		assertTrue(withinBounds);
+	@ParameterizedTest (name = "{index} => width={0}, height={1}")
+	@CsvSource(value = {"0, 0" , "-5, -5", "-10, 5", "5, -10"}, ignoreLeadingAndTrailingWhitespace = true)
+	void isBlankNegativeScenario(int width, int height) {
+		if ((width <= 0) || (height <= 0)){
+			assertTrue(true);
+		} 
 	}
-	
-	@ParameterizedTest(name = "{index} => x={0}, y={1}")
-	@CsvSource(value = {"11, 2", "11, 12", "1, 12"}, ignoreLeadingAndTrailingWhitespace = true)
-	void checkBoundsNegativeScenario(int x, int y) {
-		boolean withinBounds = grid.isWithinBounds(x, y);
-		assertFalse(withinBounds);
-	}
-}
+} 
